@@ -1,0 +1,31 @@
+{
+  "name": "talent-track",
+  "version": "1.0.0",
+  "description": "View and manage departments, roles, and employees at a company. Allowing you to organize and plan your business.",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm run test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephenlprice/talent-track.git"
+  },
+  "keywords": [
+    "employee",
+    "hr",
+    "command-line",
+    "inquirer"
+  ],
+  "author": "Stephen Price",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stephenlprice/talent-track/issues"
+  },
+  "homepage": "https://github.com/stephenlprice/talent-track#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^7.3.3",
+    "mysql": "^2.18.1"
+  }
+}
