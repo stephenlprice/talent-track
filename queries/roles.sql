@@ -67,17 +67,4 @@ VALUES
 SELECT * FROM talent_trackerdb.job_role;
 
 
--- SELECT *
--- FROM talent_trackerdb.job_role AS r 
--- RIGHT JOIN talent_trackerdb.department AS d 
--- ON r.department_id = d.id
-
--- UNION
-
--- SELECT * 
--- FROM talent_trackerdb.job_role AS r 
--- LEFT JOIN talent_trackerdb.department AS d 
--- ON r.department_id = d.id;
-
-
 

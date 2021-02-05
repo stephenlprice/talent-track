@@ -27,6 +27,3 @@ CREATE TABLE employee(
     FOREIGN KEY (role_id) REFERENCES job_role(id),
     FOREIGN KEY (manager_id) REFERENCES employee(id)
 );
-
--- FULL OUTER JOIN ALL SCHEMAS --
--- SELECT * FROM employee e FULL OUTER JOIN role r ON e.role_id = r.id FULL OUTER JOIN department d ON r.department_id = d.id ORDER BY d.id ASC;
