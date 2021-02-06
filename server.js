@@ -70,7 +70,7 @@ const view = () => {
       switch (answer.view) {
         case 'View Departments':
           console.log('Querying all Departments...');
-          orm.viewAll('department', (response) => {
+          orm.view.table('department', (response) => {
             console.table(response);
             view();
           });
@@ -78,7 +78,7 @@ const view = () => {
         
         case 'View Roles':
           console.log('Querying all Roles...');
-          orm.viewAll('job_role', (response) => {
+          orm.view.table('job_role', (response) => {
             console.table(response);
             view();
           });
@@ -86,7 +86,7 @@ const view = () => {
         
         case 'View Employees':
           console.log('Querying all Employees...');
-          orm.viewAll('employee', (response) => {
+          orm.view.table('employee', (response) => {
             console.table(response);
             view();
           });
@@ -94,7 +94,10 @@ const view = () => {
 
         case 'View All':
           console.log('Querying all Records...');
-          operations('select', '*', 'all');
+          orm.view.all((response) => {
+            console.table(response);
+            view();
+          });
           break;
         
         case 'Return to Start':

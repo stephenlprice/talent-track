@@ -43,7 +43,7 @@ const view = [
 ];
 
 const insert = {
-    menu = {
+    menu: {
         type: 'list',
         name: 'menu',
         message: 'What kind of records would you like to add to the database?',
@@ -64,4 +64,4 @@ const q = {
     insert
 }
 
-module.exports = orm;
+module.exports = q;
