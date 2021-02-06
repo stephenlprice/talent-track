@@ -1,23 +1,12 @@
 const inquirer = require('inquirer');
-const mysql = require('mysql');
 const table = require('console.table');
 const q = require('./inquirer/questions.js');
-
-// Connection settings
-const connection = mysql.createConnection({
-    host: 'localhost',
-  
-    port: 3306,
-  
-    user: 'root',
-  
-    password: 'bootcamp',
-    database: 'talent_trackerdb',
-});
+const orm = require('./config/orm.js');
+const connection = require('./config/connection.js');
 
 const start = () => {
   inquirer
-    .prompt(q.startQ)
+    .prompt(q.start)
     .then((answer) => {
       switch (answer.start) {
         case true:
@@ -29,16 +18,13 @@ const start = () => {
           console.log('Thank you for using Talent Track, goodbye!');
           connection.end();
           break;
-        
-        default:
-          start();
       }
     });
 };
 
 const menu = () => {
   inquirer
-    .prompt(q.menuQ)
+    .prompt(q.menu)
     .then((answer) => {
       switch (answer.menu) {
         case 'View Records':
@@ -68,7 +54,7 @@ const menu = () => {
         
         case 'Return to Start':
           console.log('Returning to start menu...');
-          budget();
+          start();
           break;
         
         default:
@@ -78,6 +64,39 @@ const menu = () => {
 };
 
 const view = () => {
+  inquirer
+    .prompt(q.view)
+    .then((answer) => {
+      switch (answer.view) {
+        case 'View Departments':
+          console.log('Querying all Departments...');
+          operations('select', '*', 'department');
+          break;
+        
+        case 'View Roles':
+          console.log('Querying all Roles...');
+          operations('select', '*', 'job_role');
+          break;
+        
+        case 'View Employees':
+          console.log('Querying all Employees...');
+          operations('select', '*', 'employee');
+          break;
+
+        case 'View All':
+          console.log('Querying all Records...');
+          operations('select', '*', 'all');
+          break;
+        
+        case 'Return to Start':
+          console.log('Returning to start menu...');
+          start();
+          break;
+        
+        default:
+          view();
+      }
+    });
 };
 
 const insert = () => {
@@ -94,13 +113,9 @@ const budget = () => {
 
 // function to initialize program
 function init() {
+  console.log("Welcome to Talent Track!");
   start();
 };
 
-// Connect to the DB and launch the app
-connection.connect((err) => {
-    if (err) throw err;
-    console.log(`connected as id ${connection.threadId}\n`);
-    // initialize the program
-    init();
-});
+// initialize the program
+init();

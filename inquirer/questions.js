@@ -1,13 +1,15 @@
-const startQ = [
+const inquirer = require('inquirer');
+
+const start = [
     {
         type: 'confirm',
         name: 'start',
         message: 'Do you wish to query the Talent Track - Employee Database? (y/n)',
-        default: false
+        default: true
     }
 ];
 
-const menuQ = [
+const menu = [
     {
         type: 'list',
         name: 'menu',
@@ -24,7 +26,7 @@ const menuQ = [
     }
 ];
 
-const viewQ = [
+const view = [
     {
         type: 'list',
         name: 'view',
@@ -40,6 +42,10 @@ const viewQ = [
     }
 ];
 
+const orm = {
+    start,
+    menu,
+    view
+}
 
-
-module.exports = startQ, menuQ, viewQ;
+module.exports = orm;
