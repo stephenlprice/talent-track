@@ -42,10 +42,26 @@ const view = [
     }
 ];
 
-const orm = {
+const insert = {
+    menu = {
+        type: 'list',
+        name: 'menu',
+        message: 'What kind of records would you like to add to the database?',
+        choices: [
+            'Add a new Department',
+            'Add a new Role',
+            'Add a new Employee',
+            new inquirer.Separator(),
+            'Return to Start'
+        ]
+    }
+};
+
+const q = {
     start,
     menu,
-    view
+    view,
+    insert
 }
 
 module.exports = orm;
