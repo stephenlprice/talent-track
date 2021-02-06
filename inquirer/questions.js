@@ -54,6 +54,11 @@ const insert = {
             new inquirer.Separator(),
             'Return to Start'
         ]
+    },
+    department: {
+        type: 'input',
+        name: 'department',
+        message: 'What will be the name of the new Department?'
     }
 };
 

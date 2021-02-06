@@ -112,6 +112,26 @@ const view = () => {
 };
 
 const insert = () => {
+  inquirer
+    .prompt(q.insert.menu)
+    .then((answer) => {
+      switch (answer.menu) {
+        case 'Add a new Department':
+          inquirer
+            .prompt(q.insert.department)
+            .then((answer) => {
+              console.log('Inserting a new Department...');
+              orm.insert.department(answer.department, (response) => {
+                orm.view.table('department', (response) => {
+                  console.table(response);
+                  insert();
+                });
+              });
+            });
+          break;
+
+        }
+    });
 };
 
 const update = () => {
