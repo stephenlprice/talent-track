@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const table = require('console.table');
+const cTable = require('console.table');
 const q = require('./inquirer/questions.js');
 const orm = require('./config/orm.js');
 const connection = require('./config/connection.js');
@@ -70,17 +70,26 @@ const view = () => {
       switch (answer.view) {
         case 'View Departments':
           console.log('Querying all Departments...');
-          operations('select', '*', 'department');
+          orm.viewAll('department', (response) => {
+            console.table(response);
+            view();
+          });
           break;
         
         case 'View Roles':
           console.log('Querying all Roles...');
-          operations('select', '*', 'job_role');
+          orm.viewAll('job_role', (response) => {
+            console.table(response);
+            view();
+          });
           break;
         
         case 'View Employees':
           console.log('Querying all Employees...');
-          operations('select', '*', 'employee');
+          orm.viewAll('employee', (response) => {
+            console.table(response);
+            view();
+          });
           break;
 
         case 'View All':
