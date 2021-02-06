@@ -129,8 +129,26 @@ const insert = () => {
               });
             });
           break;
+        
+        case 'Add a new Role':
+          orm.view.table('department', (response) => {
+            console.table(response);
+            console.log('Use the above table to assign the new Role to a Department');
 
-        }
+            inquirer
+            .prompt(q.insert.role)
+            .then((answer) => {
+              console.log('Inserting a new Role...');
+              orm.insert.role(answer.title, answer.salary, answer.department, (response) => {
+                orm.view.table('job_role', (response) => {
+                  console.table(response);
+                  insert();
+                });
+              });
+          });
+          });
+          break;
+      }
     });
 };
 

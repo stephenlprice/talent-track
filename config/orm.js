@@ -46,6 +46,17 @@ const insert = {
                 response(res);
             }
         );
+    },
+    role(title, salary, department_id, response) {
+        const query = 'INSERT INTO job_role(title, salary, department_id) VALUES (?, ?, ?)'; 
+        connection.query(
+            query,
+            [title, salary, department_id],
+            (err, res) => {
+                if (err) throw err;
+                response(res);
+            }
+        );
     }
 };
 

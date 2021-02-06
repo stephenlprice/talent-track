@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const orm = require('../config/orm.js');
 
 const start = [
     {
@@ -59,8 +60,26 @@ const insert = {
         type: 'input',
         name: 'department',
         message: 'What will be the name of the new Department?'
-    }
+    },
+    role: [
+        {
+            type: 'input',
+            name: 'title',
+            message: 'What will be the title for the new Role?'
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What will be the salary for the new Role?'
+        },
+        {
+            type: 'input',
+            name: 'department',
+            message: 'Which Department ID will employ this new Role?'
+        }
+    ]
 };
+
 
 const q = {
     start,
