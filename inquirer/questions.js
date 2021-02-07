@@ -51,6 +51,7 @@ const insert = {
         choices: [
             'Add a new Department',
             'Add a new Role',
+            'Add a new Manager',
             'Add a new Employee',
             new inquirer.Separator(),
             'Return to Start'
@@ -76,6 +77,45 @@ const insert = {
             type: 'input',
             name: 'department',
             message: 'Which Department ID will employ this new Role?'
+        }
+    ],
+    manager: [
+        {
+            type: 'input',
+            name: 'first',
+            message: "What is the new Manager's first name?"
+        },
+        {
+            type: 'input',
+            name: 'last',
+            message: "What is the new Manager's last name?"
+        },
+        {
+            type: 'input',
+            name: 'role',
+            message: "What is the new Manager's role ID?"
+        }
+    ],
+    employee: [
+        {
+            type: 'input',
+            name: 'first',
+            message: "What is the new employee's first name?"
+        },
+        {
+            type: 'input',
+            name: 'last',
+            message: "What is the new employee's last name?"
+        },
+        {
+            type: 'input',
+            name: 'role',
+            message: "What is the new employee's role ID?"
+        },
+        {
+            type: 'input',
+            name: 'manager',
+            message: "What is the ID that belongs by the new employee's Manager?"
         }
     ]
 };

@@ -32,12 +32,26 @@ const view = {
                 response(res);
             }
         );
+    },
+    manager(response) {
+        const query = 
+        'SELECT * FROM talent_trackerdb.employee AS e '
+        + 'WHERE e.manager_id IS NULL '
+        + 'ORDER BY e.manager_id ASC;';
+        connection.query(
+            query,
+            (err, res) => {
+                if (err) throw (err);
+                response(res);
+            }
+        );
+
     }
 };
 
 const insert = {
     department(name, response) {
-        const query = 'INSERT INTO department(name) VALUES (?)'; 
+        const query = 'INSERT INTO department(name) VALUES (?);'; 
         connection.query(
             query,
             [name],
@@ -48,7 +62,7 @@ const insert = {
         );
     },
     role(title, salary, department_id, response) {
-        const query = 'INSERT INTO job_role(title, salary, department_id) VALUES (?, ?, ?)'; 
+        const query = 'INSERT INTO job_role(title, salary, department_id) VALUES (?, ?, ?);'; 
         connection.query(
             query,
             [title, salary, department_id],
@@ -57,10 +71,30 @@ const insert = {
                 response(res);
             }
         );
+    },
+    employee(first, last, role, manager, response) {
+        const query = 'INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);'; 
+        connection.query(
+            query,
+            [first, last, role, manager],
+            (err, res) => {
+                if (err) throw err;
+                response(res);
+            }
+        );
+    },
+    manager(first, last, role, response) {
+        const query = 'INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, NULL);'; 
+        connection.query(
+            query,
+            [first, last, role],
+            (err, res) => {
+                if (err) throw err;
+                response(res);
+            }
+        );
     }
 };
-
-
 
 const orm = {
     view,

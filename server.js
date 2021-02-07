@@ -133,7 +133,7 @@ const insert = () => {
         case 'Add a new Role':
           orm.view.table('department', (response) => {
             console.table(response);
-            console.log('Use the above table to assign the new Role to a Department');
+            console.log('Use the above table to assign the new Role to a Department by ID!');
 
             inquirer
             .prompt(q.insert.role)
@@ -145,7 +145,45 @@ const insert = () => {
                   insert();
                 });
               });
+            });
           });
+          break;
+
+        case 'Add a new Manager':
+          orm.view.table('job_role', (response) => {
+            console.table(response);
+            console.log('Use the above table to assign the new Manager to a Role by ID!');
+
+            inquirer
+            .prompt(q.insert.employee)
+            .then((answer) => {
+              console.log('Inserting a new Manager...');
+              orm.insert.manager(answer.first, answer.last, answer.role, (response) => {
+                orm.view.table('employee', (response) => {
+                  console.table(response);
+                  insert();
+                });
+              });
+            });
+          });
+          break;
+        
+        case 'Add a new Employee':
+          orm.view.table('job_role', (response) => {
+            console.table(response);
+            console.log('Use the above table to assign the new Employee to a Role by ID!');
+
+            inquirer
+            .prompt(q.insert.employee)
+            .then((answer) => {
+              console.log('Inserting a new Employee...');
+              orm.insert.employee(answer.first, answer.last, answer.role, answer.manager, (response) => {
+                orm.view.table('employee', (response) => {
+                  console.table(response);
+                  insert();
+                });
+              });
+            });
           });
           break;
       }

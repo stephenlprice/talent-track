@@ -23,3 +23,9 @@ LEFT JOIN talent_trackerdb.job_role AS r
 ON e.role_id = r.id 
 LEFT JOIN talent_trackerdb.department AS d 
 ON r.department_id = d.id;
+
+-- query for managers --
+SELECT *
+FROM talent_trackerdb.employee AS e
+WHERE e.manager_id IS NULL
+ORDER BY e.manager_id ASC;
