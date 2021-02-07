@@ -65,7 +65,6 @@ const view = {
                 response(res);
             }
         );
-
     }
 };
 
@@ -116,9 +115,27 @@ const insert = {
     }
 };
 
+const update = {
+    employee: {
+        role(role, manager, employee, response) {
+            console.log("Searching database for records...");
+            const query = 'UPDATE employee SET role_id = ?, manager_id = ? WHERE id = ?;'; 
+            connection.query(
+                query,
+                [role, manager, employee],
+                (err, res) => {
+                    if (err) throw err;
+                    response(res);
+                }
+            );
+        }
+    }
+};
+
 const orm = {
     view,
-    insert
+    insert,
+    update
 };
 
 module.exports = orm;

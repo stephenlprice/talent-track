@@ -5,6 +5,7 @@ const departments = [];
 const roles = [];
 const managerRoles = [];
 const managers = [];
+const employees = [];
 
 const choices = {
     departments(operation) {
@@ -19,6 +20,7 @@ const choices = {
             
             case 'reset':
                 departments.splice(0, departments.length);
+                break;
             
             default:
                 departments.splice(0, departments.length);
@@ -36,6 +38,7 @@ const choices = {
             
             case 'reset':
                 managerRoles.splice(0, managerRoles.length);
+                break;
             
             default:
                 managerRoles.splice(0, managerRoles.length);
@@ -46,13 +49,15 @@ const choices = {
             case 'set':
                 orm.view.manager((response) => {
                     for (let i = 0; i < response.length; i++) {
-                        managers.push(response[i].first_name + ' ' + response[i].last_name + ', ' + response[i].title);
+                        managers.push(response[i].id + ': ' + response[i].first_name 
+                        + ' ' + response[i].last_name + ', ' + response[i].title);
                     }
                 });
                 break;
             
             case 'reset':
                 managers.splice(0, managers.length);
+                break;
             
             default:
                 managers.splice(0, managers.length);
@@ -70,9 +75,29 @@ const choices = {
             
             case 'reset':
                 roles.splice(0, roles.length);
+                break;
             
             default:
                 roles.splice(0, roles.length);
+        }
+    },
+    employees(operation) {
+        switch (operation) {
+            case 'set':
+                orm.view.all((response) => {
+                    for (let i = 0; i < response.length; i++) {
+                        employees.push(response[i].id + ': ' + response[i].first_name 
+                        + ' ' + response[i].last_name + ', ' + response[i].title);
+                    }
+                });
+                break;
+            
+            case 'reset':
+                employees.splice(0, employees.length);
+                break;
+            
+            default:
+                employees.splice(0, employees.length);
         }
     }
 };
@@ -200,12 +225,46 @@ const insert = {
     ]
 };
 
+const update = {
+    menu: {
+        type: 'list',
+        name: 'menu',
+        message: 'What kind of records would you like to update?',
+        choices: [
+            "Update an Employee's records",
+            new inquirer.Separator(),
+            "Return to Main Menu"
+        ]
+    }, 
+    employee: [
+        {
+            type: 'list',
+            name: 'employee',
+            message: 'Which Employee do you wish to update?',
+            choices: employees
+        },
+        {
+            type: 'list',
+            name: 'role',
+            message: "What is the Employee's new Role?",
+            choices: roles
+        },
+        {
+            type: 'list',
+            name: 'manager',
+            message: "Who is the Employee's new Manager?",
+            choices: managers
+        }
+    ] 
+};
+
 const q = {
     choices,
     start,
     menu,
     view,
-    insert
+    insert,
+    update
 }
 
 module.exports = q;

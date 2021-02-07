@@ -190,12 +190,10 @@ const insert = () => {
               .then((answer) => {
                 console.log('Inserting a new Employee...');
                 orm.view.all((response) => {
-                  let role;
-                  let manager;
                   for (let i = 0; i < response.length; i++) {
                     if(answer.role === response[i].title) {
-                      role = response[i].role_id;
-                      manager = response[i].manager_id;
+                      let role = response[i].role_id;
+                      let manager = response[i].manager_id;
                       console.log('Confirming if selected Manager belongs to the same department...');
                       orm.insert.employee(answer.first.toLowerCase(), answer.last.toLowerCase(), role, manager, (response) => {
                         orm.view.table('employee', (response) => {
@@ -223,6 +221,70 @@ const insert = () => {
 };
 
 const update = () => {
+  inquirer
+    .prompt(q.update.menu)
+    .then((answer) => {
+      switch (answer.menu) {
+        case "Update an Employee's records":
+          q.choices.managers('set');
+          q.choices.roles('set');
+          q.choices.employees('set');
+          console.log("Preparing data update module...");
+          setTimeout(() => {
+            inquirer
+              .prompt(q.update.employee)
+              .then((answer) => {
+                console.log('Updating Employee records...');
+                let role;
+                let manager;
+                let employee;
+                orm.view.table('job_role', (response) => {
+                  for (let i = 0; i < response.length; i++) {
+                    if(answer.role === response[i].title) {
+                      role = response[i].role_id;
+                      return;
+                    }
+                  }
+                });
+                orm.view.manager((response) => {
+                  for (let i = 0; i < response.length; i++) {
+                    if(answer.manager.includes(response[i].id + ': ' + response[i].first_name 
+                    + ' ' + response[i].last_name + ', ' + response[i].title)) {
+                      manager = response[i].id;
+                      return;
+                    }
+                  }
+                });
+                orm.view.table('employee', (response) => {
+                  for (let i = 0; i < response.length; i++) {
+                    if(answer.employee.includes(response[i].id + ': ' + response[i].first_name 
+                    + ' ' + response[i].last_name + ', ' + response[i].title)) {
+                      employee = response[i].id;
+                      return;
+                    }
+                  }
+                });
+                console.log("role: " + role,"manager: " + manager,"employee: " + employee);
+                orm.update.employee.role(role, manager, employee, (response) => {
+                  orm.view.all((response) => {
+                    console.table(response);
+                    update();
+                  });
+                });
+              });
+          }, 1000);
+          break;
+        
+        case 'Return to Main Menu':
+          console.log('Returning to main menu...');
+          menu();
+          break;
+        
+        default:
+          update();
+      }
+
+    });
 };
 
 const del = () => {
