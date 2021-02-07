@@ -3,110 +3,115 @@ USE talent_trackerdb;
 -- Inserting Management --
 INSERT INTO talent_trackerdb.employee(first_name, last_name, role_id, manager_id)
 VALUES 
-("Raheem", "Bohjani", 1, NULL),
-("Daniel", "Berlin", 8, NULL),
-("Nena", "Ballas", 14, NULL),
-("Sebastian", "Briceño", 20, NULL),
-("Paula", "Tulis", 25, NULL),
-("Carlos", "Mancheno", 29, NULL),
-("Jim", "Wehmeyer", 33, NULL);
+("raheem", "bohjani", 1, NULL),
+("daniel", "berlin", 8, NULL),
+("nena", "ballas", 14, NULL),
+("sebastian", "briceño", 20, NULL),
+("paula", "tulis", 25, NULL),
+("carlos", "mancheno", 29, NULL),
+("jim", "wehmeyer", 33, NULL);
 
 
 -- Inserting Software Engineers --
 INSERT INTO talent_trackerdb.employee(first_name, last_name, role_id, manager_id)
 VALUES 
-("Deep", "Patel", 2, 1),
-("Christian", "Henry", 2, 1),
-("Stephen", "Price", 3, 1),
-("Phil", "Sturgeon", 3, 1),
-("Vincenzo", "Chianese", 3, 1),
-("Ross", "McDonald", 4, 1),
-("Chris", "Lott", 4, 1),
-("Dave", "Threlkeld", 5, 1),
-("Jose", "Cordova", 5, 1),
-("Angel", "Cooper", 5, 1),
-("Dana", "Corona", 5, 1),
-("David", "Rojo", 6, 1),
-("Tafseer", "Khan", 6, 1),
-("Cole", "Ballard", 6, 1),
-("Trevor", "Smith", 6, 1),
-("Carlos", "Cantu", 7, 1),
-("Dan", "Bushong", 7, 1),
-("Richard", "Gabaree", 7, 1);
+("deep", "patel", 2, 1),
+("christian", "henry", 2, 1),
+("stephen", "price", 3, 1),
+("phil", "sturgeon", 3, 1),
+("vincenzo", "chianese", 3, 1),
+("ross", "mcdonald", 4, 1),
+("chris", "lott", 4, 1),
+("dave", "threlkeld", 5, 1),
+("jose", "cordova", 5, 1),
+("angel", "cooper", 5, 1),
+("dana", "corona", 5, 1),
+("david", "rojo", 6, 1),
+("tafseer", "khan", 6, 1),
+("cole", "ballard", 6, 1),
+("trevor", "smith", 6, 1),
+("carlos", "cantu", 7, 1),
+("dan", "bushong", 7, 1),
+("richard", "gabaree", 7, 1);
 
 -- Inserting Support Engineers --
 INSERT INTO talent_trackerdb.employee(first_name, last_name, role_id, manager_id)
 VALUES 
-("Josh", "Davis", 9, 2),
-("Criss", "Mariñelarena", 10, 2),
-("Nicole", "Pank", 10, 2),
-("Shivam", "Naik", 11, 2),
-("Alfredo", "Noboa", 11, 2),
-("Michael", "Tran", 12, 2),
-("Jacob", "Duden", 12, 2),
-("Brice", "Whitefield", 12, 2),
-("Diego", "Arguello", 13, 2),
-("Esther", "Schenau", 13, 2),
-("Zach", "Wood", 13, 2);
+("josh", "davis", 9, 2),
+("criss", "mariñelarena", 10, 2),
+("nicole", "pank", 10, 2),
+("shivam", "naik", 11, 2),
+("alfredo", "noboa", 11, 2),
+("michael", "tran", 12, 2),
+("jacob", "duden", 12, 2),
+("brice", "whitefield", 12, 2),
+("diego", "arguello", 13, 2),
+("esther", "schenau", 13, 2),
+("zach", "wood", 13, 2);
 
 -- Inserting Sales Engineers --
 INSERT INTO talent_trackerdb.employee(first_name, last_name, role_id, manager_id)
 VALUES 
-("Bryant", "Howell", 15, 3),
-("Gordon", "Rose", 16, 3),
-("Tri", "Tu", 16, 3),
-("Jeremy", "Mayo", 17, 3),
-("Alex", "Cortez", 17, 3),
-("Michael", "Hizny", 18, 3),
-("Sasha", "Singh", 18, 3),
-("Alicino", "Moura", 19, 3),
-("Luiz", "Silva", 19, 3),
-("Grant", "Joseph", 19, 3);
+("bryant", "howell", 15, 3),
+("gordon", "rose", 16, 3),
+("tri", "tu", 16, 3),
+("jeremy", "mayo", 17, 3),
+("alex", "cortez", 17, 3),
+("michael", "hizny", 18, 3),
+("sasha", "singh", 18, 3),
+("alicino", "moura", 19, 3),
+("luiz", "silva", 19, 3),
+("grant", "joseph", 19, 3);
 
 -- Inserting Sales --
 INSERT INTO talent_trackerdb.employee(first_name, last_name, role_id, manager_id)
 VALUES 
-("Guilherme", "Baglioli", 21, 4),
-("Gonzalo", "Gutierrez", 21, 4),
-("Carlos", "Lobera", 22, 4),
-("Brenda", "Bitar", 22, 4),
-("JC", "Gallo", 23, 4),
-("Caroline", "Garza", 23, 4),
-("Margarete", "Baylin", 23, 4),
-("Holly", "Anfinson", 23, 4),
-("Annie", "Noboa", 24, 4),
-("Breno", "Soares", 24, 4),
-("Lizette", "Flores", 24, 4),
-("Breno", "Soares", 24, 4),
-("Tonia", "Roberts", 24, 4),
-("Tamina", "Zaheri", 24, 4);
+("guilherme", "baglioli", 21, 4),
+("gonzalo", "gutierrez", 21, 4),
+("carlos", "lobera", 22, 4),
+("brenda", "bitar", 22, 4),
+("jc", "gallo", 23, 4),
+("caroline", "garza", 23, 4),
+("margarete", "baylin", 23, 4),
+("holly", "anfinson", 23, 4),
+("annie", "noboa", 24, 4),
+("breno", "soares", 24, 4),
+("lizette", "flores", 24, 4),
+("breno", "soares", 24, 4),
+("tonia", "roberts", 24, 4),
+("tamina", "zaheri", 24, 4);
 
 -- Inserting Marketing --
 INSERT INTO talent_trackerdb.employee(first_name, last_name, role_id, manager_id)
 VALUES 
-("Evan", "Le", 26, 5),
-("Kristen", "White", 27, 5),
-("Brandon", "Gatica", 27, 5),
-("Harrison", "Yeagor", 28, 5),
-("Manuel", "Burbano", 28, 5);
+("evan", "le", 26, 5),
+("kristen", "white", 27, 5),
+("brandon", "gatica", 27, 5),
+("harrison", "yeagor", 28, 5),
+("manuel", "burbano", 28, 5);
 
 -- Inserting Finance --
 INSERT INTO talent_trackerdb.employee(first_name, last_name, role_id, manager_id)
 VALUES 
-("Eric", "Landivar", 30, 6),
-("Carlos", "Cardenas", 31, 6),
-("Brandon", "Sommers", 31, 6),
-("Robert", "Wallach", 32, 6),
-("Nathaly", "Guevara", 32, 6);
+("eric", "landivar", 30, 6),
+("carlos", "cardenas", 31, 6),
+("brandon", "sommers", 31, 6),
+("robert", "wallach", 32, 6),
+("nathaly", "guevara", 32, 6);
 
 -- Inserting Human Resources --
 INSERT INTO talent_trackerdb.employee(first_name, last_name, role_id, manager_id)
 VALUES 
-("Grecia", "Treviño", 34, 7),
-("Audrey", "Rodríguez", 35, 7),
-("Emily", "Chu", 35, 7),
-("Najoua", "Nabil", 36, 7),
-("Jeff", "Mehalek", 36, 7);
+("grecia", "treviño", 34, 7),
+("audrey", "rodríguez", 35, 7),
+("emily", "chu", 35, 7),
+("najoua", "nabil", 36, 7),
+("jeff", "mehalek", 36, 7);
 
 
 SELECT * FROM talent_trackerdb.employee;
+
+-- Only returns manager roles --
+SELECT r.title FROM talent_trackerdb.job_role AS r
+WHERE r.title LIKE '%manager%'
+ORDER BY r.title ASC;

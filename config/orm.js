@@ -46,6 +46,20 @@ const view = {
             }
         );
 
+    },
+    managerRole(response) {
+        const query = 
+        'SELECT r.title FROM talent_trackerdb.job_role AS r '
+        + 'WHERE r.title LIKE "%manager%" '
+        + 'ORDER BY r.title ASC;';
+        connection.query(
+            query,
+            (err, res) => {
+                if (err) throw (err);
+                response(res);
+            }
+        );
+
     }
 };
 

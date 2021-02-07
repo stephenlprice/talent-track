@@ -2,6 +2,8 @@ const inquirer = require('inquirer');
 const orm = require('../config/orm.js');
 
 const departments = [];
+const roles = [];
+const managerRoles = [];
 
 const choices = {
     departments(operation) {
@@ -11,7 +13,6 @@ const choices = {
                     for (let i = 0; i < response.length; i++) {
                         departments.push(response[i].name);
                     }
-                    console.log('choices', departments);
                 });
                 break;
             
@@ -20,6 +21,23 @@ const choices = {
             
             default:
                 departments.splice(0, departments.length);
+        }
+    },
+    managerRoles(operation) {
+        switch (operation) {
+            case 'set':
+                orm.view.managerRole((response) => {
+                    for (let i = 0; i < response.length; i++) {
+                        managerRoles.push(response[i].title);
+                    }
+                });
+                break;
+            
+            case 'reset':
+                managerRoles.splice(0, roles.length);
+            
+            default:
+                managerRoles.splice(0, roles.length);
         }
     }
 };
@@ -61,7 +79,7 @@ const view = [
             'View Employees',
             'View All',
             new inquirer.Separator(),
-            'Return to Start'
+            'Return to Main Menu'
         ]
     }
 ];
@@ -74,10 +92,10 @@ const insert = {
         choices: [
             'Add a new Department',
             'Add a new Role',
-            'Add a new Manager',
-            'Add a new Employee',
+            'Add a new Manager to an existing Role',
+            'Add a new Employee to an existing Role',
             new inquirer.Separator(),
-            'Return to Start'
+            'Return to Main Menu'
         ]
     },
     department: {
@@ -115,9 +133,10 @@ const insert = {
             message: "What is the new Manager's last name?"
         },
         {
-            type: 'input',
+            type: 'list',
             name: 'role',
-            message: "What is the new Manager's role ID?"
+            message: "What is the new Manager's role?",
+            choices: managerRoles
         }
     ],
     employee: [
