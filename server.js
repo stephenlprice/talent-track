@@ -134,7 +134,6 @@ const insert = () => {
         case 'Add a new Role':
           q.choices.departments('set');
           console.log("Preparing data insertion module...");
-          q.log();
           setTimeout(() => {
             inquirer
               .prompt(q.insert.role)
@@ -142,15 +141,16 @@ const insert = () => {
                 console.log('Inserting a new Role...');
                 orm.view.table('department', (response) => {
                   for (let i = 0; i < response.length; i++) {
-                      departments.push(response[i].name);
+                    if(answer.department === response[i].name) {
+                      const id = response[i].id;
+                      orm.insert.role(answer.title, answer.salary, id, (response) => {
+                        orm.view.table('job_role', (response) => {
+                          console.table(response);
+                          insert();
+                        });
+                      });
+                    }
                   }
-                  console.log('choices', departments);
-                });
-                orm.insert.role(answer.title, answer.salary, answer.department, (response) => {
-                  orm.view.table('job_role', (response) => {
-                    console.table(response);
-                    insert();
-                  });
                 });
               });
           }, 1000);
@@ -193,6 +193,14 @@ const insert = () => {
             });
           });
           break;
+        
+        case 'Return to Start':
+          console.log('Returning to start menu...');
+          start();
+          break;
+        
+        default:
+          insert();
       }
     });
 };
