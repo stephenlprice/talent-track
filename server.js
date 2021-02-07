@@ -181,22 +181,34 @@ const insert = () => {
           break;
         
         case 'Add a new Employee to an existing Role':
-          orm.view.table('job_role', (response) => {
-            console.table(response);
-            console.log('Use the above table to assign the new Employee to a Role by ID!');
-
+          q.choices.roles('set');
+          q.choices.managers('set');
+          console.log("Preparing data insertion module...");
+          setTimeout(() => {
             inquirer
-            .prompt(q.insert.employee)
-            .then((answer) => {
-              console.log('Inserting a new Employee...');
-              orm.insert.employee(answer.first, answer.last, answer.role, answer.manager, (response) => {
-                orm.view.table('employee', (response) => {
-                  console.table(response);
-                  insert();
+              .prompt(q.insert.employee)
+              .then((answer) => {
+                console.log('Inserting a new Employee...');
+                orm.view.all((response) => {
+                  let role;
+                  let manager;
+                  for (let i = 0; i < response.length; i++) {
+                    if(answer.role === response[i].title) {
+                      role = response[i].role_id;
+                      manager = response[i].manager_id;
+                      console.log('Confirming if selected Manager belongs to the same department...');
+                      orm.insert.employee(answer.first.toLowerCase(), answer.last.toLowerCase(), role, manager, (response) => {
+                        orm.view.table('employee', (response) => {
+                          console.table(response);
+                          insert();
+                        });
+                      });
+                      return;
+                    }
+                  }
                 });
               });
-            });
-          });
+          }, 1000);
           break;
         
         case 'Return to Main Menu':

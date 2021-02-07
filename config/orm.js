@@ -18,7 +18,7 @@ const view = {
     },
     all(response) {
         const query = 
-        'SELECT e.id, first_name, last_name, manager_id, title, salary, d.name AS department '
+        'SELECT e.id, first_name, last_name, manager_id, e.role_id, title, salary, d.name AS department '
         + 'FROM talent_trackerdb.employee AS e '
         + 'INNER JOIN talent_trackerdb.job_role AS r '
         + 'ON e.role_id = r.id '
@@ -35,7 +35,10 @@ const view = {
     },
     manager(response) {
         const query = 
-        'SELECT * FROM talent_trackerdb.employee AS e '
+        'SELECT e.id, e.first_name, e.last_name, e.role_id, r.title ' 
+        + 'FROM talent_trackerdb.employee AS e '
+        + 'INNER JOIN talent_trackerdb.job_role AS r '
+        + 'ON e.role_id = r.id '
         + 'WHERE e.manager_id IS NULL '
         + 'ORDER BY e.manager_id ASC;';
         connection.query(
@@ -49,8 +52,11 @@ const view = {
     },
     managerRole(response) {
         const query = 
-        'SELECT r.title FROM talent_trackerdb.job_role AS r '
-        + 'WHERE r.title LIKE "%manager%" '
+        'SELECT r.id, r.title, e.role_id, e.manager_id ' 
+        + 'FROM talent_trackerdb.job_role AS r '
+        + 'INNER JOIN talent_trackerdb.employee as e '
+        + 'ON r.id = e.role_id '
+        + 'WHERE e.manager_id IS NULL '
         + 'ORDER BY r.title ASC;';
         connection.query(
             query,

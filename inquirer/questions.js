@@ -4,6 +4,7 @@ const orm = require('../config/orm.js');
 const departments = [];
 const roles = [];
 const managerRoles = [];
+const managers = [];
 
 const choices = {
     departments(operation) {
@@ -34,10 +35,44 @@ const choices = {
                 break;
             
             case 'reset':
-                managerRoles.splice(0, roles.length);
+                managerRoles.splice(0, managerRoles.length);
             
             default:
-                managerRoles.splice(0, roles.length);
+                managerRoles.splice(0, managerRoles.length);
+        }
+    },
+    managers(operation) {
+        switch (operation) {
+            case 'set':
+                orm.view.manager((response) => {
+                    for (let i = 0; i < response.length; i++) {
+                        managers.push(response[i].first_name + ' ' + response[i].last_name + ', ' + response[i].title);
+                    }
+                });
+                break;
+            
+            case 'reset':
+                managers.splice(0, managers.length);
+            
+            default:
+                managers.splice(0, managers.length);
+        }
+    },
+    roles(operation) {
+        switch (operation) {
+            case 'set':
+                orm.view.table('job_role', (response) => {
+                    for (let i = 0; i < response.length; i++) {
+                        roles.push(response[i].title);
+                    }
+                });
+                break;
+            
+            case 'reset':
+                roles.splice(0, roles.length);
+            
+            default:
+                roles.splice(0, roles.length);
         }
     }
 };
@@ -117,7 +152,7 @@ const insert = {
         {
             type: 'list',
             name: 'department',
-            message: 'Which Department ID will employ this new Role?',
+            message: 'Which Department will employ this new Role?',
             choices: departments
         }
     ],
@@ -143,22 +178,24 @@ const insert = {
         {
             type: 'input',
             name: 'first',
-            message: "What is the new employee's first name?"
+            message: "What is the new Employee's first name?"
         },
         {
             type: 'input',
             name: 'last',
-            message: "What is the new employee's last name?"
+            message: "What is the new Employee's last name?"
         },
         {
-            type: 'input',
+            type: 'list',
             name: 'role',
-            message: "What is the new employee's role ID?"
+            message: "What is the new Employee's Role?",
+            choices: roles
         },
         {
-            type: 'input',
+            type: 'list',
             name: 'manager',
-            message: "What is the ID that belongs by the new employee's Manager?"
+            message: "Who is the new Employee's Manager?",
+            choices: managers
         }
     ]
 };

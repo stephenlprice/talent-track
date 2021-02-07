@@ -110,8 +110,3 @@ VALUES
 
 
 SELECT * FROM talent_trackerdb.employee;
-
--- Only returns manager roles --
-SELECT r.title FROM talent_trackerdb.job_role AS r
-WHERE r.title LIKE '%manager%'
-ORDER BY r.title ASC;

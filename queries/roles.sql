@@ -66,5 +66,23 @@ VALUES
 
 SELECT * FROM talent_trackerdb.job_role;
 
+-- Only returns manager roles --
+SELECT r.title FROM talent_trackerdb.job_role AS r
+WHERE r.title LIKE '%manager%'
+ORDER BY r.title ASC;
 
+-- query for orm.manager --
+SELECT e.id, e.first_name, e.last_name, e.role_id, r.title, e.manager_id
+FROM talent_trackerdb.employee AS e
+INNER JOIN talent_trackerdb.job_role AS r
+ON e.role_id = r.id
+WHERE e.manager_id IS NULL
+ORDER BY e.id ASC;
 
+-- query for orm.managerRole --
+SELECT r.id, r.title, e.role_id, e.manager_id
+FROM talent_trackerdb.job_role AS r
+INNER JOIN talent_trackerdb.employee as e
+ON r.id = e.role_id
+WHERE e.manager_id IS NULL
+ORDER BY r.title ASC;

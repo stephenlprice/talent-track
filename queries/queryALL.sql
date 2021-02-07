@@ -1,5 +1,5 @@
 -- query for orm.view.all --
-SELECT e.id, first_name, last_name, manager_id, title, salary, d.name AS department
+SELECT e.id, first_name, last_name, manager_id, e.role_id, title, salary, d.name AS department
 FROM talent_trackerdb.employee AS e
 INNER JOIN talent_trackerdb.job_role AS r
 ON e.role_id = r.id 
