@@ -1,6 +1,29 @@
 const inquirer = require('inquirer');
 const orm = require('../config/orm.js');
 
+const departments = [];
+
+const choices = {
+    departments(operation) {
+        switch (operation) {
+            case 'set':
+                orm.view.table('department', (response) => {
+                    for (let i = 0; i < response.length; i++) {
+                        departments.push(response[i].name);
+                    }
+                    console.log('choices', departments);
+                });
+                break;
+            
+            case 'reset':
+                departments.splice(0, departments.length);
+            
+            default:
+                departments.splice(0, departments.length);
+        }
+    }
+};
+
 const start = [
     {
         type: 'confirm',
@@ -74,9 +97,10 @@ const insert = {
             message: 'What will be the salary for the new Role?'
         },
         {
-            type: 'input',
+            type: 'list',
             name: 'department',
-            message: 'Which Department ID will employ this new Role?'
+            message: 'Which Department ID will employ this new Role?',
+            choices: departments
         }
     ],
     manager: [
@@ -120,8 +144,8 @@ const insert = {
     ]
 };
 
-
 const q = {
+    choices,
     start,
     menu,
     view,

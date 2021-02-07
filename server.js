@@ -3,6 +3,7 @@ const cTable = require('console.table');
 const q = require('./inquirer/questions.js');
 const orm = require('./config/orm.js');
 const connection = require('./config/connection.js');
+const { choices } = require('./inquirer/questions.js');
 
 const start = () => {
   inquirer
@@ -131,22 +132,28 @@ const insert = () => {
           break;
         
         case 'Add a new Role':
-          orm.view.table('department', (response) => {
-            console.table(response);
-            console.log('Use the above table to assign the new Role to a Department by ID!');
-
+          q.choices.departments('set');
+          console.log("Preparing data insertion module...");
+          q.log();
+          setTimeout(() => {
             inquirer
-            .prompt(q.insert.role)
-            .then((answer) => {
-              console.log('Inserting a new Role...');
-              orm.insert.role(answer.title, answer.salary, answer.department, (response) => {
-                orm.view.table('job_role', (response) => {
-                  console.table(response);
-                  insert();
+              .prompt(q.insert.role)
+              .then((answer) => {
+                console.log('Inserting a new Role...');
+                orm.view.table('department', (response) => {
+                  for (let i = 0; i < response.length; i++) {
+                      departments.push(response[i].name);
+                  }
+                  console.log('choices', departments);
+                });
+                orm.insert.role(answer.title, answer.salary, answer.department, (response) => {
+                  orm.view.table('job_role', (response) => {
+                    console.table(response);
+                    insert();
+                  });
                 });
               });
-            });
-          });
+          }, 1000);
           break;
 
         case 'Add a new Manager':
