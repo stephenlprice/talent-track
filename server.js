@@ -234,6 +234,7 @@ const update = () => {
             inquirer
               .prompt(q.update.employee)
               .then((answer) => {
+                console.log('answer: ', answer);
                 console.log('Updating Employee records...');
                 let role;
                 let manager;
@@ -241,7 +242,7 @@ const update = () => {
                 orm.view.table('job_role', (response) => {
                   for (let i = 0; i < response.length; i++) {
                     if(answer.role === response[i].title) {
-                      role = response[i].role_id;
+                      role = response[i].id;
                       return;
                     }
                   }
@@ -258,19 +259,21 @@ const update = () => {
                 orm.view.table('employee', (response) => {
                   for (let i = 0; i < response.length; i++) {
                     if(answer.employee.includes(response[i].id + ': ' + response[i].first_name 
-                    + ' ' + response[i].last_name + ', ' + response[i].title)) {
+                    + ' ' + response[i].last_name)) {
                       employee = response[i].id;
                       return;
                     }
                   }
                 });
-                console.log("role: " + role,"manager: " + manager,"employee: " + employee);
-                orm.update.employee.role(role, manager, employee, (response) => {
-                  orm.view.all((response) => {
-                    console.table(response);
-                    update();
+                setTimeout(() => {
+                  orm.update.employee.role(role, manager, employee, (response) => {
+                    orm.view.all((response) => {
+                      console.table(response);
+                      console.log('Success! Employee ID: ' + employee, 'now has a Role ID: ' + role, 'and a Manager ID: ' + manager);
+                      update();
+                    });
                   });
-                });
+                }, 1000);
               });
           }, 1000);
           break;
