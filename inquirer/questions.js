@@ -120,10 +120,10 @@ const menu = [
             'View Records',
             'Insert New Records', 
             'Update Records', 
-            'Delete Records', 
             'View Total Annualized Budget by Department', 
             new inquirer.Separator(), 
-            'Return to Start'
+            'Return to Start',
+            new inquirer.Separator()
         ]
     }
 ];
@@ -138,9 +138,11 @@ const view = [
             'View Roles',
             'View Employees',
             'View Employees by Manager',
+            'View Total Annualized Budget by Department',
             'View All',
             new inquirer.Separator(),
-            'Return to Main Menu'
+            'Return to Main Menu',
+            new inquirer.Separator()
         ]
     }
 ];
@@ -156,7 +158,8 @@ const insert = {
             'Add a new Manager to an existing Role',
             'Add a new Employee to an existing Role',
             new inquirer.Separator(),
-            'Return to Main Menu'
+            'Return to Main Menu',
+            new inquirer.Separator()
         ]
     },
     department: {
@@ -234,7 +237,8 @@ const update = {
         choices: [
             "Update an Employee's records",
             new inquirer.Separator(),
-            "Return to Main Menu"
+            "Return to Main Menu",
+            new inquirer.Separator()
         ]
     }, 
     employee: [

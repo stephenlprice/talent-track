@@ -99,6 +99,14 @@ const view = () => {
             view();
           });
           break;
+        
+        case 'View Total Annualized Budget by Department':
+          console.log('Querying all salaries by Department...');
+          orm.view.annualBudget((response) => {
+            console.table(response);
+            view();
+          });
+          break;
 
         case 'View All':
           console.log('Querying all Records...');
