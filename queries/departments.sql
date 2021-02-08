@@ -1,7 +1,7 @@
 USE talent_trackerdb;
 
 -- Inserting Deparments --
-INSERT INTO department(name)
+INSERT INTO talent_trackerdb.department(name)
 VALUES 
 ("engineering"),
 ("support"),
