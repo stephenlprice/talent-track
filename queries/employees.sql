@@ -121,3 +121,8 @@ ON m.id = e.manager_id
 INNER JOIN talent_trackerdb.job_role AS r 
 ON e.role_id = r.id
 ORDER BY m.id ASC
+
+SELECT r.id, r.title
+FROM talent_trackerdb.job_role AS r 
+WHERE r.title LIKE ('%manager%')
+ORDER BY r.title ASC;

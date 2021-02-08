@@ -36,8 +36,8 @@ INSERT INTO job_role(title, salary, department_id)
 VALUES 
 ("sales manager", 135000, 4),
 ("account executive", 135000, 4),
-("enterprise sales manager", 120000, 4),
-("commercial sales manager", 80000, 4),
+("enterprise sales executive", 120000, 4),
+("commercial sales executive", 80000, 4),
 ("business development representative", 65000, 4);
 
 -- Inserting Marketing Roles --

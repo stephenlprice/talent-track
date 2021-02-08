@@ -3,6 +3,7 @@ const cTable = require('console.table');
 const q = require('./inquirer/questions.js');
 const orm = require('./config/orm.js');
 const connection = require('./config/connection.js');
+const chalk = require('chalk');
 
 const start = () => {
   inquirer
@@ -10,12 +11,12 @@ const start = () => {
     .then((answer) => {
       switch (answer.start) {
         case true:
-          console.log('Initiating the start menu...');
+          console.log(chalk.bold.bgWhite('Initiating the start menu...'));
           menu();
           break;
 
         case false:
-          console.log('Thank you for using Talent Track, goodbye!');
+          console.log(chalk.bold.bgWhite('Thank you for using Talent Track, goodbye!'));
           connection.end();
           break;
       }
@@ -28,32 +29,22 @@ const menu = () => {
     .then((answer) => {
       switch (answer.menu) {
         case 'View Records':
-          console.log('Initiating the SELECT query menu...');
+          console.log(chalk.bold.bgYellow('Initiating the SELECT query menu...'));
           view();
           break;
         
         case 'Insert New Records':
-          console.log('Initiating the INSERT query menu...');
+          console.log(chalk.bold.bgGreen('Initiating the INSERT query menu...'));
           insert();
           break;
 
         case 'Update Records':
-          console.log('Initiating the UPDATE query menu...');
+          console.log(chalk.bold.bgBlue('Initiating the UPDATE query menu...'));
           update();
-          break;
-
-        case 'Delete Records':
-          console.log('Initiating the DELETE query menu...');
-          del();
-          break;
-        
-        case 'View Total Annualized Budget by Department':
-          console.log('Initiating the budget query...');
-          budget();
           break;
         
         case 'Return to Start':
-          console.log('Returning to start menu...');
+          console.log(chalk.bold.bgCyan('Returning to start menu...'));
           start();
           break;
         
@@ -69,7 +60,7 @@ const view = () => {
     .then((answer) => {
       switch (answer.view) {
         case 'View Departments':
-          console.log('Querying all Departments...');
+          console.log(chalk.bold.bgYellow('Querying all Departments...'));
           orm.view.table('department', (response) => {
             console.table(response);
             view();
@@ -77,7 +68,7 @@ const view = () => {
           break;
         
         case 'View Roles':
-          console.log('Querying all Roles...');
+          console.log(chalk.bold.bgYellow('Querying all Roles...'));
           orm.view.table('job_role', (response) => {
             console.table(response);
             view();
@@ -85,7 +76,7 @@ const view = () => {
           break;
         
         case 'View Employees':
-          console.log('Querying all Employees...');
+          console.log(chalk.bold.bgYellow('Querying all Employees...'));
           orm.view.table('employee', (response) => {
             console.table(response);
             view();
@@ -93,7 +84,7 @@ const view = () => {
           break;
         
         case 'View Employees by Manager':
-          console.log('Querying all Employees by Manager...');
+          console.log(chalk.bold.bgYellow('Querying all Employees by Manager...'));
           orm.view.employeesByManager((response) => {
             console.table(response);
             view();
@@ -101,7 +92,7 @@ const view = () => {
           break;
         
         case 'View Total Annualized Budget by Department':
-          console.log('Querying all salaries by Department...');
+          console.log(chalk.bold.bgYellow('Querying all salaries by Department...'));
           orm.view.annualBudget((response) => {
             console.table(response);
             view();
@@ -109,7 +100,7 @@ const view = () => {
           break;
 
         case 'View All':
-          console.log('Querying all Records...');
+          console.log(chalk.bold.bgYellow('Querying all Records...'));
           orm.view.all((response) => {
             console.table(response);
             view();
@@ -117,7 +108,7 @@ const view = () => {
           break;
         
         case 'Return to Main Menu':
-          console.log('Returning to main menu...');
+          console.log(chalk.bold.bgCyan('Returning to main menu...'));
           menu();
           break;
         
@@ -133,10 +124,11 @@ const insert = () => {
     .then((answer) => {
       switch (answer.menu) {
         case 'Add a new Department':
+          console.log(chalk.bold.bgGreen("Preparing data insertion module..."));
           inquirer
             .prompt(q.insert.department)
             .then((answer) => {
-              console.log('Inserting a new Department...');
+              console.log(chalk.bold.bgGreen('Inserting a new Department...'));
               orm.insert.department(answer.department.toLowerCase(), (response) => {
                 orm.view.table('department', (response) => {
                   console.table(response);
@@ -148,12 +140,12 @@ const insert = () => {
         
         case 'Add a new Role':
           q.choices.departments('set');
-          console.log("Preparing data insertion module...");
+          console.log(chalk.bold.bgGreen("Preparing data insertion module..."));
           setTimeout(() => {
             inquirer
               .prompt(q.insert.role)
               .then((answer) => {
-                console.log('Inserting a new Role...');
+                console.log(chalk.bold.bgGreen('Inserting a new Role...'));
                 orm.view.table('department', (response) => {
                   for (let i = 0; i < response.length; i++) {
                     if(answer.department === response[i].name) {
@@ -173,12 +165,12 @@ const insert = () => {
 
         case 'Add a new Manager to an existing Role':
           q.choices.managerRoles('set');
-          console.log("Preparing data insertion module...");
+          console.log(chalk.bold.bgGreen("Preparing data insertion module..."));
           setTimeout(() => {
             inquirer
               .prompt(q.insert.manager)
               .then((answer) => {
-                console.log('Inserting a new Manager...');
+                console.log(chalk.bold.bgGreen('Inserting a new Manager...'));
                 orm.view.table('job_role', (response) => {
                   for (let i = 0; i < response.length; i++) {
                     if(answer.role === response[i].title) {
@@ -199,34 +191,46 @@ const insert = () => {
         case 'Add a new Employee to an existing Role':
           q.choices.roles('set');
           q.choices.managers('set');
-          console.log("Preparing data insertion module...");
+          console.log(chalk.bold.bgGreen("Preparing data insertion module..."));
           setTimeout(() => {
             inquirer
               .prompt(q.insert.employee)
               .then((answer) => {
-                console.log('Inserting a new Employee...');
-                orm.view.all((response) => {
+                console.log(chalk.bold.bgGreen('Inserting a new Employee...'));
+                let role;
+                let manager;
+                orm.view.table('job_role', (response) => {
                   for (let i = 0; i < response.length; i++) {
                     if(answer.role === response[i].title) {
-                      let role = response[i].role_id;
-                      let manager = response[i].manager_id;
-                      console.log('Confirming if selected Manager belongs to the same department...');
-                      orm.insert.employee(answer.first.toLowerCase(), answer.last.toLowerCase(), role, manager, (response) => {
-                        orm.view.table('employee', (response) => {
-                          console.table(response);
-                          insert();
-                        });
-                      });
+                      role = response[i].id;
                       return;
                     }
                   }
                 });
+                orm.view.manager((response) => {
+                  for (let i = 0; i < response.length; i++) {
+                    if(answer.manager.includes(response[i].id + ': ' + response[i].first_name 
+                    + ' ' + response[i].last_name + ', ' + response[i].title)) {
+                      manager = response[i].id;
+                      return;
+                    }
+                  }
+                });
+                console.log(chalk.bold.bgGreen('Validating inputs...'));
+                setTimeout(() => {
+                  orm.insert.employee(answer.first.toLowerCase(), answer.last.toLowerCase(), role, manager, (response) => {
+                    orm.view.table('employee', (response) => {
+                      console.table(response);
+                      insert();
+                    });
+                  });
+                }, 1000);
               });
           }, 1000);
           break;
         
         case 'Return to Main Menu':
-          console.log('Returning to main menu...');
+          console.log(chalk.bold.bgCyan('Returning to main menu...'));
           menu();
           break;
         
@@ -245,13 +249,12 @@ const update = () => {
           q.choices.managers('set');
           q.choices.roles('set');
           q.choices.employees('set');
-          console.log("Preparing data update module...");
+          console.log(chalk.bold.bgBlue("Preparing data update module..."));
           setTimeout(() => {
             inquirer
               .prompt(q.update.employee)
               .then((answer) => {
-                console.log('answer: ', answer);
-                console.log('Updating Employee records...');
+                console.log(chalk.bold.bgBlue('Updating Employee records...'));
                 let role;
                 let manager;
                 let employee;
@@ -285,7 +288,7 @@ const update = () => {
                   orm.update.employee.role(role, manager, employee, (response) => {
                     orm.view.all((response) => {
                       console.table(response);
-                      console.log('Success! Employee ID: ' + employee, 'now has a Role ID: ' + role, 'and a Manager ID: ' + manager);
+                      console.log(chalk.bold.bgBlue('Success! Employee ID: ' + employee, 'now has a Role ID: ' + role, 'and a Manager ID: ' + manager));
                       update();
                     });
                   });
@@ -295,7 +298,7 @@ const update = () => {
           break;
         
         case 'Return to Main Menu':
-          console.log('Returning to main menu...');
+          console.log(chalk.bold.bgCyan('Returning to main menu...'));
           menu();
           break;
         
@@ -321,8 +324,7 @@ function init() {
 █████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗
 ╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝
 `
-  console.log(output);
-  console.log("Welcome to Talent Track!");
+  console.log(chalk.cyan(output));
   start();
 };
 

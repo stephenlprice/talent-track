@@ -120,7 +120,6 @@ const menu = [
             'View Records',
             'Insert New Records', 
             'Update Records', 
-            'View Total Annualized Budget by Department', 
             new inquirer.Separator(), 
             'Return to Start',
             new inquirer.Separator()

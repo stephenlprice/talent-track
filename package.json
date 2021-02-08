@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/stephenlprice/talent-track#readme",
   "dependencies": {
+    "chalk": "^4.1.0",
     "console.table": "^0.10.0",
     "inquirer": "^7.3.3",
     "mysql": "^2.18.1"

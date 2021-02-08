@@ -52,12 +52,10 @@ const view = {
     },
     managerRole(response) {
         const query = 
-        'SELECT r.id, r.title, e.role_id, e.manager_id ' 
-        + 'FROM talent_trackerdb.job_role AS r '
-        + 'INNER JOIN talent_trackerdb.employee as e '
-        + 'ON r.id = e.role_id '
-        + 'WHERE e.manager_id IS NULL '
-        + 'ORDER BY r.title ASC;';
+        `SELECT r.id, r.title
+        FROM talent_trackerdb.job_role AS r 
+        WHERE r.title LIKE ('%manager%')
+        ORDER BY r.title ASC;`;
         connection.query(
             query,
             (err, res) => {
@@ -156,7 +154,6 @@ const insert = {
 const update = {
     employee: {
         role(role, manager, employee, response) {
-            console.log("Searching database for records...");
             const query = 'UPDATE employee SET role_id = ?, manager_id = ? WHERE id = ?;'; 
             connection.query(
                 query,
