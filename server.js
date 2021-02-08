@@ -62,7 +62,7 @@ const view = () => {
         case 'View Departments':
           console.log(chalk.bold.bgYellow('Querying all Departments...'));
           orm.view.table('department', (response) => {
-            console.table(response);
+            console.table('Departments', response);
             view();
           });
           break;
@@ -70,7 +70,7 @@ const view = () => {
         case 'View Roles':
           console.log(chalk.bold.bgYellow('Querying all Roles...'));
           orm.view.table('job_role', (response) => {
-            console.table(response);
+            console.table('Roles', response);
             view();
           });
           break;
@@ -78,7 +78,7 @@ const view = () => {
         case 'View Employees':
           console.log(chalk.bold.bgYellow('Querying all Employees...'));
           orm.view.table('employee', (response) => {
-            console.table(response);
+            console.table('Employees', response);
             view();
           });
           break;
@@ -86,7 +86,7 @@ const view = () => {
         case 'View Employees by Manager':
           console.log(chalk.bold.bgYellow('Querying all Employees by Manager...'));
           orm.view.employeesByManager((response) => {
-            console.table(response);
+            console.table('Employees by Manager', response);
             view();
           });
           break;
@@ -94,7 +94,7 @@ const view = () => {
         case 'View Total Annualized Budget by Department':
           console.log(chalk.bold.bgYellow('Querying all salaries by Department...'));
           orm.view.annualBudget((response) => {
-            console.table(response);
+            console.table('Annual Budget by Department', response);
             view();
           });
           break;
@@ -102,7 +102,7 @@ const view = () => {
         case 'View All':
           console.log(chalk.bold.bgYellow('Querying all Records...'));
           orm.view.all((response) => {
-            console.table(response);
+            console.table('All Database Records', response);
             view();
           });
           break;
@@ -131,7 +131,7 @@ const insert = () => {
               console.log(chalk.bold.bgGreen('Inserting a new Department...'));
               orm.insert.department(answer.department.toLowerCase(), (response) => {
                 orm.view.table('department', (response) => {
-                  console.table(response);
+                  console.table('Departments', response);
                   insert();
                 });
               });
@@ -152,7 +152,7 @@ const insert = () => {
                       const id = response[i].id;
                       orm.insert.role(answer.title.toLowerCase(), answer.salary, id, (response) => {
                         orm.view.table('job_role', (response) => {
-                          console.table(response);
+                          console.table('Roles', response);
                           insert();
                         });
                       });
@@ -177,7 +177,7 @@ const insert = () => {
                       const id = response[i].id;
                       orm.insert.manager(answer.first.toLowerCase(), answer.last.toLowerCase(), id, (response) => {
                         orm.view.manager((response) => {
-                          console.table(response);
+                          console.table('Managers', response);
                           insert();
                         });
                       });
@@ -220,7 +220,7 @@ const insert = () => {
                 setTimeout(() => {
                   orm.insert.employee(answer.first.toLowerCase(), answer.last.toLowerCase(), role, manager, (response) => {
                     orm.view.table('employee', (response) => {
-                      console.table(response);
+                      console.table('Employees', response);
                       insert();
                     });
                   });
@@ -287,7 +287,7 @@ const update = () => {
                 setTimeout(() => {
                   orm.update.employee.role(role, manager, employee, (response) => {
                     orm.view.all((response) => {
-                      console.table(response);
+                      console.table('All Database Records', response);
                       console.log(chalk.bold.bgBlue('Success! Employee ID: ' + employee, 'now has a Role ID: ' + role, 'and a Manager ID: ' + manager));
                       update();
                     });
