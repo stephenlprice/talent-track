@@ -65,7 +65,26 @@ const view = {
                 response(res);
             }
         );
-    }
+    },
+    employeesByManager(response) {
+        const query = 
+        `SELECT
+        CONCAT(m.first_name, ' ', m.last_name) AS Manager,
+        CONCAT(e.first_name, ' ', e.last_name, ', ', r.title) AS 'Direct Report'
+        FROM talent_trackerdb.employee AS e
+        INNER JOIN talent_trackerdb.employee AS m
+        ON m.id = e.manager_id
+        INNER JOIN talent_trackerdb.job_role AS r 
+        ON e.role_id = r.id
+        ORDER BY m.id ASC`
+        connection.query(
+            query,
+            (err, res) => {
+                if (err) throw (err);
+                response(res);
+            }
+        );
+    },
 };
 
 const insert = {

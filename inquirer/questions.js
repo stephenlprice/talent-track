@@ -137,6 +137,7 @@ const view = [
             'View Departments',
             'View Roles',
             'View Employees',
+            'View Employees by Manager',
             'View All',
             new inquirer.Separator(),
             'Return to Main Menu'

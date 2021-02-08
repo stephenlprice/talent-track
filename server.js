@@ -91,6 +91,14 @@ const view = () => {
             view();
           });
           break;
+        
+        case 'View Employees by Manager':
+          console.log('Querying all Employees by Manager...');
+          orm.view.employeesByManager((response) => {
+            console.table(response);
+            view();
+          });
+          break;
 
         case 'View All':
           console.log('Querying all Records...');
