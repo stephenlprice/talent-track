@@ -29,3 +29,14 @@ SELECT *
 FROM talent_trackerdb.employee AS e
 WHERE e.manager_id IS NULL
 ORDER BY e.manager_id ASC;
+
+-- query for annual budget --
+SELECT
+d.name AS Department,
+SUM(r.salary) AS 'Annual Budget'
+FROM talent_trackerdb.department AS d
+INNER JOIN talent_trackerdb.job_role AS r 
+ON d.id = r.department_id
+INNER JOIN talent_trackerdb.employee AS e
+ON r.id = e.role_id
+GROUP BY d.name

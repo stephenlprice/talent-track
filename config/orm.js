@@ -65,7 +65,44 @@ const view = {
                 response(res);
             }
         );
-
+    },
+    employeesByManager(response) {
+        const query = 
+        `SELECT
+        CONCAT(m.first_name, ' ', m.last_name) AS Manager,
+        CONCAT(e.first_name, ' ', e.last_name, ', ', r.title) AS 'Direct Report'
+        FROM talent_trackerdb.employee AS e
+        INNER JOIN talent_trackerdb.employee AS m
+        ON m.id = e.manager_id
+        INNER JOIN talent_trackerdb.job_role AS r 
+        ON e.role_id = r.id
+        ORDER BY m.id ASC`
+        connection.query(
+            query,
+            (err, res) => {
+                if (err) throw (err);
+                response(res);
+            }
+        );
+    },
+    annualBudget(response) {
+        const query = 
+        `SELECT
+        d.name AS Department,
+        SUM(r.salary) AS 'Annual Budget'
+        FROM talent_trackerdb.department AS d
+        INNER JOIN talent_trackerdb.job_role AS r 
+        ON d.id = r.department_id
+        INNER JOIN talent_trackerdb.employee AS e
+        ON r.id = e.role_id
+        GROUP BY d.name`
+        connection.query(
+            query,
+            (err, res) => {
+                if (err) throw (err);
+                response(res);
+            }
+        );
     }
 };
 
@@ -116,9 +153,27 @@ const insert = {
     }
 };
 
+const update = {
+    employee: {
+        role(role, manager, employee, response) {
+            console.log("Searching database for records...");
+            const query = 'UPDATE employee SET role_id = ?, manager_id = ? WHERE id = ?;'; 
+            connection.query(
+                query,
+                [role, manager, employee],
+                (err, res) => {
+                    if (err) throw err;
+                    response(res);
+                }
+            );
+        }
+    }
+};
+
 const orm = {
     view,
-    insert
+    insert,
+    update
 };
 
 module.exports = orm;

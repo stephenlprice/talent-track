@@ -91,6 +91,22 @@ const view = () => {
             view();
           });
           break;
+        
+        case 'View Employees by Manager':
+          console.log('Querying all Employees by Manager...');
+          orm.view.employeesByManager((response) => {
+            console.table(response);
+            view();
+          });
+          break;
+        
+        case 'View Total Annualized Budget by Department':
+          console.log('Querying all salaries by Department...');
+          orm.view.annualBudget((response) => {
+            console.table(response);
+            view();
+          });
+          break;
 
         case 'View All':
           console.log('Querying all Records...');
@@ -190,12 +206,10 @@ const insert = () => {
               .then((answer) => {
                 console.log('Inserting a new Employee...');
                 orm.view.all((response) => {
-                  let role;
-                  let manager;
                   for (let i = 0; i < response.length; i++) {
                     if(answer.role === response[i].title) {
-                      role = response[i].role_id;
-                      manager = response[i].manager_id;
+                      let role = response[i].role_id;
+                      let manager = response[i].manager_id;
                       console.log('Confirming if selected Manager belongs to the same department...');
                       orm.insert.employee(answer.first.toLowerCase(), answer.last.toLowerCase(), role, manager, (response) => {
                         orm.view.table('employee', (response) => {
@@ -223,6 +237,73 @@ const insert = () => {
 };
 
 const update = () => {
+  inquirer
+    .prompt(q.update.menu)
+    .then((answer) => {
+      switch (answer.menu) {
+        case "Update an Employee's records":
+          q.choices.managers('set');
+          q.choices.roles('set');
+          q.choices.employees('set');
+          console.log("Preparing data update module...");
+          setTimeout(() => {
+            inquirer
+              .prompt(q.update.employee)
+              .then((answer) => {
+                console.log('answer: ', answer);
+                console.log('Updating Employee records...');
+                let role;
+                let manager;
+                let employee;
+                orm.view.table('job_role', (response) => {
+                  for (let i = 0; i < response.length; i++) {
+                    if(answer.role === response[i].title) {
+                      role = response[i].id;
+                      return;
+                    }
+                  }
+                });
+                orm.view.manager((response) => {
+                  for (let i = 0; i < response.length; i++) {
+                    if(answer.manager.includes(response[i].id + ': ' + response[i].first_name 
+                    + ' ' + response[i].last_name + ', ' + response[i].title)) {
+                      manager = response[i].id;
+                      return;
+                    }
+                  }
+                });
+                orm.view.table('employee', (response) => {
+                  for (let i = 0; i < response.length; i++) {
+                    if(answer.employee.includes(response[i].id + ': ' + response[i].first_name 
+                    + ' ' + response[i].last_name)) {
+                      employee = response[i].id;
+                      return;
+                    }
+                  }
+                });
+                setTimeout(() => {
+                  orm.update.employee.role(role, manager, employee, (response) => {
+                    orm.view.all((response) => {
+                      console.table(response);
+                      console.log('Success! Employee ID: ' + employee, 'now has a Role ID: ' + role, 'and a Manager ID: ' + manager);
+                      update();
+                    });
+                  });
+                }, 1000);
+              });
+          }, 1000);
+          break;
+        
+        case 'Return to Main Menu':
+          console.log('Returning to main menu...');
+          menu();
+          break;
+        
+        default:
+          update();
+      }
+
+    });
 };
 
 const del = () => {
